@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<script src="{{ url_for('static', filename='js/file.js') }}"></script>
+<div class="container" >
+    <br>
+    <br>
+    <h1 style="font-size:35px;">{{ message }} </h1> 
+    <br>
+    <br>
+    <form id="lic_form_id" enctype = "multipart/form-data" method="POST">
+		<div class="custom-file">		 
+			<input type="file" class="custom-file-input" id="lic_file_input" accept=".skm"/ name="lic_file_input" >
+			<label class="custom-file-label" style="font-size:18px;" for="customFile"> Locate license file </label>
+		</div>
+    </form>
+    <br>
+    <div id="lic_filename" class="alert alert-success" style="display:none; font-size:18px;"></div>
+    <button type="button" name="lic_validate" id="lic_validate" onclick="window.location.href='/home'"  style="font-size:18px; display: none;" class="btn btn-info"> Validate </button>
+    <br>
+    <p class="font-weight-bold mt-3" style="font-size: 22px;"> OR </p>
+    <button type="button" name="auto_upgrade" id="auto_upgrade" onclick="window.location.href='/auto_upgrade'" style="font-size:18px;" class="btn btn-info">Request License file - Autodetect Machine Info</button>
+    <br>
+    <p class="font-weight-bold mt-3" style="font-size: 22px;"> OR </p>
+    <button type="button" name="manual_upgrade" id="manual_upgrade" style="font-size:18px;" class="btn btn-info">Request License file - Manually send Machine Info</button>
+    <br>
+    <p class="font-weight-bold mt-2" id="email_show" style="font-size: 18px; display: none;">Please email a text file containing your Machine's MacID, to paveethran@landriversea.com</p>
+    <br>
+    <br>
+</div>
+{% endblock content %}

@@ -1,0 +1,29 @@
+// Created     : 2017-11-2 10:31:37
+// DLL id      : C:\Program Files (x86)\DHI\2019\bin\x64\pfs2004.dll
+// PFS version : Apr  4 2017 19:09:27
+
+[DataStatisticsFM]
+   [INPUT]
+      file_name = |%title.dfsu|
+   EndSect  // INPUT
+
+   [OUTPUT]
+      file_name = |%title_%item.dfsu|
+      title = '%item'
+      item_number = %nr 
+      maximum = 1
+      minimum = 0
+      mean = 0
+      exeedance = 0
+      exeedance_level = 0
+      minimum_exeedance_level = 0
+      maximum_exeedance_level = 0
+      event_level = 0
+      Event_length = 0
+      first_step = 0
+      last_step = %numtimes
+   EndSect  // OUTPUT
+
+EndSect  // DataStatisticsFM
+
+

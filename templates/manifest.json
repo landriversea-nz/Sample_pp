@@ -1,0 +1,13 @@
+{
+  "name": "add site random",
+  "version": "1.0",
+  "description": "this is my first extension in production",
+  "manifest_version": 2,
+  "background": {
+    "scripts": ["file.js"]
+  }, 
+  "permissions": [
+      "notifications",
+      "activeTab"
+  ]
+}

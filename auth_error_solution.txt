@@ -1,0 +1,3 @@
+Open node_modules/builder-util-runtime/out/httpExecutor.js
+Find .endsWith(".amazonaws.com") and replace with .endsWith(".amazonaws.com") || parsedNewUrl.searchParams.has("X-Amz-Credential")
+Done

@@ -1,0 +1,243 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<script src="{{ url_for('static', filename='js/file.js') }}"></script>
+
+<br>
+<div class="container" >
+    <div class="page-header border-bottom">
+      <h1 style="font-size:35px;">DFSU-DFS2-ASC-TIF Processor Toolkit</h1>      
+    </div>
+</div>
+<br>
+
+<div class="container" >
+
+<div id='select_mike_div' >
+	<p class="font-weight-bold mt-3" style="font-size: 18px;"> Select the MikeDHI version present in this machine</p>
+		<select class="custom-select mt-1" id="mike_version" style="display:inline-block; width:500px; height:50px;">
+			<option>None</option>
+			<option>2017</option>
+			<option>2018</option>
+			<option>2019</option>
+			<option>2020</option>
+			<option>2021</option>
+		</select>
+</div>
+<br><br>
+
+<div class="ui form" id="input_mode" style="display: none;">
+ <form>
+ 	<label class="font-weight-bold" style="font-size:20px;">  Select a preferred mode of Input   </label>&nbsp;&nbsp;&nbsp;&nbsp;
+    <label class="radio-inline" style="font-size:18px;">
+      <input type="radio" name="optradio" id="files_mode">	Single/multiple Files input mode
+    </label> &nbsp;&nbsp;&nbsp;&nbsp;
+    <label class="radio-inline" style="font-size:18px;">
+      <input type="radio" name="optradio" id="folder_mode">	Folder input mode
+    </label>
+  </form>
+<br>
+</div>
+
+
+<div class="ui form" id="ext_input" style="display: none;">
+	<div class="inline fields">
+	  <label class="font-weight-bold" style="font-size:18px;"> Select the file extension to use </label>
+		<div class="form-check form-check-inline">
+			<input class="form-check-input" type="radio" name="inlineRadioOptions2" id="dfsu_ext">
+			<label style="font-size:17px;" class="form-check-label" for="inlineRadio2">DFSU</label>
+		</div>
+	  
+	  <div class="form-check form-check-inline">
+		<input class="form-check-input" type="radio" name="inlineRadioOptions2" id="dfs2_ext">
+		<label style="font-size:17px;" class="form-check-label" for="inlineRadio2">DFS2</label>
+	  </div>
+
+	  <div class="form-check form-check-inline">
+		<input class="form-check-input" type="radio" name="inlineRadioOptions2" id="asci_ext">
+		<label style="font-size:17px;" class="form-check-label" for="inlineRadio2">ASCI</label>
+	  </div>
+	</div>
+  </div>
+
+  
+	<div id="divLoading" style="margin: 0px; padding: 0px; position: fixed; right: 0px; top: 0px; width: 100%; height: 100%; background-color: rgb(103, 101, 114); z-index: 30001; opacity: 0.8; display: none;">
+		<img src="static/27.gif" style="position: absolute; color: White; top: 50%; left: 45%;" width="60px" height="60px">
+	</div>
+	<div id="divLoading_full_river" style="margin: 0px; padding: 0px; position: fixed; right: 0px; top: 0px; width: 100%; height: 100%; background-color: rgb(103, 101, 114); z-index: 30001; opacity: 0.8; display: none;">
+		<img src="static/27_static.jpg" style="position: absolute; color: White; top: 50%; left: 45%;" width="60px" height="60px">
+	</div>
+	<br>
+
+	
+	<div id='folder_form_id' style="display: none;">
+		<form id="form_id" enctype = "multipart/form-data" method="POST" >
+			<div class="custom-file">		 
+				<input type="file" class="custom-file-input" id="dfsu_folder_input" name="dfsu_folder_input" webkitdirectory directory multiple>
+				<label class="custom-file-label" style="font-size:18px;" for="customFile">Choose a folder with DFSU/DFS2/ASCI file(s)</label>
+			</div>
+		</form>
+	</div>
+	<br>
+	<div id="filename_combo_folder" class="alert alert-success" style="display:none; font-size:18px;"></div>
+	<br>
+	<div id="progress_wrapper_folder" class="d-none">
+		<label id="progress_status_folder"> 50% uploaded</label>
+		<div class="progress mb-3">
+			<div id="progress_folder" class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+				
+			</div>
+		</div>
+	</div>
+
+	<div id="alert_wrapper_folder">
+	</div>
+
+
+
+
+
+
+	
+	<div id='files_form_id' style="display: none;">
+		<form id="form_id_1" enctype = "multipart/form-data" method="POST">
+			<div class="custom-file">		 
+				<input type="file" class="custom-file-input" id="dfsu_file_input" name="dfsu_file_input" multiple>
+				<label class="custom-file-label" style="font-size:18px;" for="customFile">Choose DFSU/DFS2/ASCI file(s)</label>
+			</div>
+		</form>
+	</div>
+	<br>
+	<div id="filename_combo" class="alert alert-success" style="display:none; font-size:18px;"></div>
+	<br>
+	<div id="progress_wrapper" class="d-none">
+		<label id="progress_status"> 50% uploaded</label>
+		<div class="progress mb-3">
+			<div id="progress" class="progress-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+				
+			</div>
+		</div>
+	</div>
+
+	<div id="alert_wrapper">
+	</div>
+
+
+
+
+	<br>
+	
+	<button type="button" name="load_dfsufile" id="load_dfsufile" style="font-size:18px; display:none;" class="btn btn-info">Load File</button>
+	&nbsp; &nbsp; &nbsp; 
+	<button type="button" name="reset_data" id="reset_data" style="font-size:18px; display:none;" class="btn btn-info">Reset File</button>
+	<br><br>
+	<i><p id="dfsufile_load_status" name="dfsufile_load_status" class="font-weight-bold mt-2" style="font-size: 18px; display: none;"></p></i>
+	<br>
+	
+	<!-- <div id='select_mike_div' style="display:none;">
+	<p class="font-weight-bold mt-3" style="font-size: 18px;"> Select the MikeDHI version present in this machine</p>
+		<select class="custom-select mt-1" id="mike_version" style="display:inline-block; width:500px; height:50px;">
+			<option>None</option>
+			<option>2017</option>
+			<option>2018</option>
+			<option>2019</option>
+			<option>2020</option>
+			<option>2021</option>
+		</select>
+	</div> -->
+
+	<div class="field_wrapper_dfs2" id='inp_dfsu_contents' style="display:none;">
+		<p class="font-weight-bold mt-2" style="font-size: 18px;"> Check one or more Output file types </p> 
+				<div class="funkyradio">
+						<div class="funkyradio-primary">
+							<input type="checkbox" name="out_options" id="checkbox1" value="maxdfsu_out"/>
+							<label for="checkbox1">Extract Max DFSU</label>
+						</div>
+				</div>
+				<div class="funkyradio">
+						<div class="funkyradio-primary">
+							<input type="checkbox" name="out_options" id="checkbox2" value="dfs2_out"/>
+							<label for="checkbox2">DFS2</label>
+						</div>
+				</div>
+				<div class="funkyradio">
+						<div class="funkyradio-primary">
+							<input type="checkbox" name="out_options" id="checkbox3" value="asci_out"/>
+							<label for="checkbox3">ASCI</label>
+						</div>
+				</div>
+				<div class="funkyradio">
+					<div class="funkyradio-primary">
+						<input type="checkbox" name="out_options" id="checkbox4" value="tif_out"/>
+						<label for="checkbox4">TIF</label>
+					</div>
+				</div>
+	</div>
+	
+	<div class="field_wrapper_dfs2" id='inp_dfs2_contents' style="display:none;">
+		<p class="font-weight-bold mt-2" style="font-size: 18px;"> Check one or more Output file types </p> 
+				<div class="funkyradio">
+						<div class="funkyradio-primary">
+							<input type="checkbox" name="out_options" id="checkbox5" value="asci_out"/>
+							<label for="checkbox5">ASCI</label>
+						</div>
+				</div>
+				<div class="funkyradio">
+					<div class="funkyradio-primary">
+						<input type="checkbox" name="out_options" id="checkbox6" value="tif_out"/>
+						<label for="checkbox6">TIF</label>
+					</div>
+				</div>
+	</div>
+
+	<div id='inp_asci_contents' style="display:none;">
+		<p class="font-weight-bold mt-2" style="font-size: 18px;"> Converting input ASCI to TIF file </p> 
+	</div>
+
+	<div id='inp_max_dfsu' style="display:none;">
+		<br>
+		<p class="font-weight-bold mt-2" style="font-size: 18px;"> Detected Maximum DFSU input file - skipping Max calculation </p> 
+		<br>
+	</div>
+	
+	<div class="field_wrapper" id="items_options_div" style="display: none;" >
+		<p class="font-weight-bold mt-3" style="font-size: 18px;"> Select the Item names to process </p>
+		<div style="display:inline-block;">
+			<select class="custom-select mt-1" id="items_options" style="display:inline-block; width:500px; height:50px;">
+				<option>None</option>
+			</select>
+			<a href="javascript:void(0);" class="add_button mt-3" style="display:inline-block;" title="Add field"><img src="static/add_icon.jpeg" width="35px" height="35px"/></a>
+		</div>
+	</div>
+
+	<!-- style="display: none;" or can write this dynamically in jquery -->
+	<div id="pfs_details" style="display: none;">
+		<p class="font-weight-bold mt-2" style="font-size: 18px;">X origin</p>
+		<input type="text" style="display:inline-block; width:500px; height:50px;" class="form-control" id="x_orig">
+		<p class="font-weight-bold mt-2" style="font-size: 18px;">Y origin</p>
+		<input type="text" style="display:inline-block; width:500px; height:50px;" class="form-control" id="y_orig">
+		<p class="font-weight-bold mt-2" style="font-size: 18px;">Grid-cell size</p>
+		<input type="text" style="display:inline-block; width:500px; height:50px;" class="form-control" id="grid_size">
+	</div>
+	<br>
+	
+	<div id='only_asci_epsg'  style="display: none;">
+		<p class="font-weight-bold mt-2" style="font-size: 18px;"> Enter the EPSG Code in the format EPSG:XXXX - Enter the 4 digit 'X' value </p>
+		<input type="text" style="display:inline-block; width:500px; height:50px;" class="form-control" id="epsg_code">
+	</div>
+	
+	<div class="custom-control custom-checkbox checkbox-lg" style="display: none;"  id='change_no_data_div'  >
+		<input type="checkbox" class="custom-control-input" id="defaultUnchecked8" name="change_nodata">
+		<label class="custom-control-label font-weight-bold"" style="font-size: 18px;" for="defaultUnchecked8"> Change '0' to NoData Value in TIF raster file ?  </label>
+	</div><br>
+
+	<button type="button" name="convert_go" id="convert_go" style="font-size:18px; display:none;" class="btn btn-info"> Convert </button>
+	<br>
+
+</div>
+
+<br>
+<br>
+
+
+{% endblock content %}

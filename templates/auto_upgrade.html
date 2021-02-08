@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<script src="{{ url_for('static', filename='js/file.js') }}"></script>
+<div class="container" >
+    <div id="divLoading" style="margin: 0px; padding: 0px; position: fixed; right: 0px; top: 0px; width: 100%; height: 100%; background-color: rgb(103, 101, 114); z-index: 30001; opacity: 0.8; display: none;">
+		<img src="static/27.gif" style="position: absolute; color: White; top: 50%; left: 45%;" width="60px" height="60px">
+	</div>
+    <br>
+    <br>
+    <h1 style="font-size:35px;"> Request for License Key </h1> 
+    <br>
+    <div id="auto_select_vali_div">
+        <p class="font-weight-bold mt-2" style="font-size: 18px;">Enter your full name </p>
+        <input type="text" style="display:inline-block; width:500px; height:50px;" class="form-control" id="upgrade_name" placeholder="Name">
+        <br>
+        <p class="font-weight-bold mt-2" style="font-size: 18px;">Enter your Business email ID to recieve the License file</p>
+        <input type="text" style="display:inline-block; width:500px; height:50px;" class="form-control" id="upgrade_email" placeholder="Email">
+   
+    </div>
+    <br>
+    <button type="button" name="auto_request" id="auto_request" style="font-size:18px;" class="btn btn-info">Request License file </button>
+    <p id="after_request_show" class="font-weight-bold mt-2" style="font-size: 18px; display: none;"></p>
+    <br>
+    <br>
+</div>
+{% endblock content %}

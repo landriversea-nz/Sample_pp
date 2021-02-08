@@ -1,0 +1,12 @@
+/node_modules
+/dist
+/tryout_folder
+/build
+/__pycache__
+electron-builder.yml
+package-lock.json
+.vscode
+build/
+__pycache__/
+PostProcessor_latest.exe
+/.git

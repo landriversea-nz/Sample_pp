@@ -1,0 +1,55 @@
+{
+    "name": "postprocessor-staging",
+    "version": "0.1.3",
+    "main": "main.js",
+    "author": "Land River Sea Consulting Ltd",
+    "scripts": {
+        "dev": "npm run development",
+        "start": "electron .",
+        "pack": "electron-builder --dir",
+        "deploy": "electron-builder build --win --publish always",
+        "dist": "electron-builder build --win --publish never"
+    },
+    "repository": {
+        "type" : "git",
+        "url" : "https://github.com/paveethran-lrs/Sample_pp.git"
+      },
+    "dependencies": {
+        "electron-packager": "^15.2.0",
+        "electron-updater": "^4.3.5",
+        "path": "^0.12.7",
+        "python-shell": "^2.0.3",
+        "request": "^2.88.2",
+        "request-promise": "^4.2.6",
+        "slash": "^3.0.0",
+        "taskkill": "^3.1.0"
+    },
+    "devDependencies": {
+        "electron": "^11.2.2",
+        "electron-builder": "^22.9.1",
+        "electron-prebuilt": "*",
+        "electron-reload": "^1.5.0"
+    },
+    "build": {
+        "appId": "com.landriversea.postprocessor-production",
+        "copyright": "Copyright © 2021 Land River Sea Consulting",
+        "productName": "PostProcessor Toolkit",
+        "target": "NSIS",
+        "extraFiles": [
+            "static",
+            "templates",
+            "PostProcessor_latest.exe",
+            "CreateASC.pfs",
+            "CreateDFS2.pfs",
+            "ExtractMaxDFSU.pfs",
+            "activity.html"
+        ],
+        "nsis": {
+            "allowToChangeInstallationDirectory": false,
+            "oneClick": true,
+            "createDesktopShortcut": true,
+            "runAfterFinish": false,
+            "deleteAppDataOnUninstall": true
+        }
+    }
+}
